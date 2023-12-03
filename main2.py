@@ -7,15 +7,14 @@ import pymunk
 pygame.init()
 rng = np.random.default_rng()
 
+# blits
+BG = pygame.image.load("blits/suikabackground.png")
+CLOUD = pygame.image.load("blits/cloudboi.png")
+
 # Constants
-SIZE = WIDTH, HEIGHT = np.array([570, 770])
-PAD = (24, 160)
-A = (PAD[0], PAD[1])
-B = (PAD[0], HEIGHT - PAD[0])
-C = (WIDTH - PAD[0], HEIGHT - PAD[0])
-D = (WIDTH - PAD[0], PAD[1])
-BG_COLOR = (250, 240, 148)
-W_COLOR = (250, 190, 58)
+SIZE = WIDTH, HEIGHT = np.array([1280, 720])
+PAD = (415, 85, 863, 675)
+W_COLOR = (170, 100, 0)
 COLORS = [
     (245, 0, 0),
     (250, 100, 100),
@@ -31,7 +30,6 @@ COLORS = [
 ]
 FPS = 120
 RADII = [17, 25, 32, 38, 50, 63, 75, 87, 100, 115, 135]
-THICKNESS = 14
 DENSITY = 0.001
 ELASTICITY = 0.1
 IMPULSE = 10000
@@ -81,35 +79,27 @@ class PreParticle:
         self.x = x
         print(f"PreParticle {id(self)} created")
 
-    def draw(self, screen):
+    def draw(self, screen, wait):
         c1 = np.array(COLORS[self.n])
         c2 = (c1 * 0.8).astype(int)
-        pygame.draw.circle(screen, tuple(c2), (self.x, PAD[1] // 2), self.radius)
-        pygame.draw.circle(screen, tuple(c1), (self.x, PAD[1] // 2), self.radius * 0.9)
+        screen.blit(CLOUD, (self.x, 8))
+        if not wait:
+            pygame.draw.circle(screen, tuple(c2), (self.x, PAD[1]), self.radius)
+            pygame.draw.circle(screen, tuple(c1), (self.x, PAD[1]), self.radius * 0.9)
 
     def set_x(self, x):
-        lim = PAD[0] + self.radius + THICKNESS // 2
+        lim = PAD[0] + self.radius
         self.x = np.clip(x, lim, WIDTH - lim)
 
     def release(self, space):
-        return Particle((self.x, PAD[1] // 2), self.n, space)
+        return Particle((self.x, PAD[1]), self.n, space)
 
 
 class Wall(pymunk.Segment):
-    thickness = THICKNESS
-
     def __init__(self, a, b, space):
-        super().__init__(
-            body=pymunk.Body(body_type=pymunk.Body.STATIC),
-            a=a,
-            b=b,
-            radius=self.thickness // 2
-        )
+        super().__init__(body=pymunk.Body(body_type=pymunk.Body.STATIC), a=a, b=b, radius=2)
         self.friction = 10
         space.add(self.body, self)
-
-    def draw(self, screen):
-        pygame.draw.line(screen, W_COLOR, self.a, self.b, self.thickness)
 
 
 def resolve_collision(p1, p2, space, particles):
@@ -143,10 +133,9 @@ space.damping = DAMPING
 space.collision_bias = BIAS
 
 # Walls
-pad = 20
-left = Wall(A, B, space)
-bottom = Wall(B, C, space)
-right = Wall(C, D, space)
+left = Wall((PAD[0], PAD[1]), (PAD[0], PAD[3]), space)
+bottom = Wall((PAD[0], PAD[3]), (PAD[2], PAD[3]), space)
+right = Wall((PAD[2], PAD[3]), (PAD[2], PAD[1]), space)
 walls = [left, bottom, right]
 
 
@@ -199,16 +188,13 @@ while not game_over:
         wait_for_next -= 1
 
     # Draw background and particles
-    screen.fill(BG_COLOR)
-    if wait_for_next == 0:
-        next_particle.draw(screen)
-    for w in walls:
-        w.draw(screen)
+    screen.blit(BG, (0, 0))
+    next_particle.draw(screen, wait_for_next)
     for p in particles:
         p.draw(screen)
-        if p.pos[1] < PAD[1] and p.has_collided:
+        if p.pos[1] < 160 and p.has_collided:
             label = overfont.render("Game Over!", 1, (0, 0, 0))
-            screen.blit(label, PAD)
+            screen.blit(label, (30, 160))
             game_over = True
     label = scorefont.render(f"Score: {handler.data['score']}", 1, (0, 0, 0))
     screen.blit(label, (10, 10))
