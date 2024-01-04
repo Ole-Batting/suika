@@ -1,0 +1,37 @@
+screen:
+  width: 1280
+  height: 720
+  fps: 60
+  delay: 60
+  white: [245, 245, 245]
+
+pad:
+  left: 415
+  top: 85
+  right: 863
+  bot: 675
+  line_top: 65
+  line_bot: 673
+  killy: 170
+
+physics:
+  density: 0.001
+  elasticity: 0.1
+  impulse: 10000
+  gravity: 600
+  damping: 0.8
+  bias: 0.00001
+  fruit_friction: 0.4
+  wall_friction: 10
+
+cherry:     {size: [40, 40],   offset: [-4, -4], radius: 17,  points: 1}
+strawberry: {size: [40, 43],   offset: [-1, 0],  radius: 21,  points: 3}
+grapes:     {size: [62, 56],   offset: [0, -1],  radius: 29,  points: 6}
+orange:     {size: [72, 69],   offset: [2, 0],   radius: 35,  points: 10}
+persimmon:  {size: [88, 96],   offset: [0, -3],  radius: 45,  points: 15}
+apple:      {size: [112, 112], offset: [0, 0],   radius: 56,  points: 21}
+pear:       {size: [130, 130], offset: [0, 0],   radius: 65,  points: 28}
+peach:      {size: [156, 156], offset: [-1, -1], radius: 78,  points: 36}
+pineapple:  {size: [175, 200], offset: [0, -13], radius: 87,  points: 45}
+melon:      {size: [250, 220], offset: [17, 0],  radius: 109, points: 55}
+watermelon: {size: [250, 250], offset: [0, 0],   radius: 125, points: 66}

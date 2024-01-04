@@ -37,7 +37,7 @@ THICKNESS = 14
 DENSITY = 0.002
 ELASTICITY = 0.1
 IMPULSE = 10000
-GRAVITY = 2000
+GRAVITY = 2400
 DAMPING = 0.75
 NEXT_DELAY = FPS
 BIAS = 0.00001
@@ -232,6 +232,8 @@ while not game_over:
             game_over = True
     label = scorefont.render(f"Score: {handler.data['score']}", 1, (0, 0, 0))
     screen.blit(label, (10, 10))
+    label = scorefont.render(f"fps: {clock.get_fps()}", 1, (0, 0, 0))
+    screen.blit(label, (10, 30))
 
     space.step(1/FPS)
     pygame.display.update()
