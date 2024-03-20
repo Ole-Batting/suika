@@ -1,7 +1,7 @@
 screen:
   width: 1280
   height: 720
-  fps: 120
+  fps: 60
   delay: 60
   white: [245, 245, 245]
   score: [195, 140]

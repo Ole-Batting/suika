@@ -22,8 +22,9 @@ class Config:
         self.pad = ConfigNode(**self.config["pad"])
         self.physics = ConfigNode(**self.config["physics"])
 
-        self.fruit_names = ["cherry", "strawberry", "grapes", "orange", "persimmon", "apple",
-                            "pear", "peach", "pineapple", "melon", "watermelon"]
+        self.fruit_names = ["cherry", "strawberry", "grapes", "orange",
+                            "persimmon", "apple", "pear", "peach", "pineapple",
+                            "melon", "watermelon"]
 
         self.background_blit = pygame.image.load("blits/background.png")
         self.cloud_blit = pygame.image.load("blits/cloud.png")
