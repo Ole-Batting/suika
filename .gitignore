@@ -1,5 +1,5 @@
 /scenes
 /venv
 /.idea
-/exp
-/SUIKA2
+/*_local*
+*_local.*

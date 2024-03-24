@@ -4,6 +4,7 @@ screen:
   fps: 60
   delay: 60
   white: [245, 245, 245]
+  score: [195, 140]
 
 pad:
   left: 415
