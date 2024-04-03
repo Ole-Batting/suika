@@ -6,6 +6,7 @@ You will need the packages:
 - numpy
 - pygame
 - pymunk
+- pyyaml
 
 preferably installed in a virtual environment such as 
 - poetry
